@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Compiled class file
 *.class
 
@@ -24,6 +25,8 @@
 hs_err_pid*
 replay_pid*
 =======
+=======
+>>>>>>> 8116fd26c96a34a5b8bdd7d1ec91cb82b3a085b7
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -57,4 +60,7 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 >>>>>>> 8116fd2 (Initial commit: Spring Boot project setup)
+=======
+>>>>>>> 8116fd26c96a34a5b8bdd7d1ec91cb82b3a085b7
