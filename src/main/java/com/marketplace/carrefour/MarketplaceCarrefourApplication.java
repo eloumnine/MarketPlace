@@ -30,7 +30,7 @@ public class MarketplaceCarrefourApplication {
 		// Ajouter des produits de test
 		produitRepository.save(new Produit("Table", 150, "Photo Table"));
 		produitRepository.save(new Produit("Chaise", 40, "Photo Chaise"));
-		produitRepository.save(new Produit("PC", 10900, "Photo PC"));
+		produitRepository.save(new Produit("PC Portable", 10900, "Photo PC"));
 		produitRepository.save(new Produit("Ramette", 40, "Photo Ramette"));
 
 		// Tester la pagination
