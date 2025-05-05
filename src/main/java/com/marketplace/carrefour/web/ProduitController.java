@@ -9,12 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -47,22 +49,24 @@ public class ProduitController {
         return "formProduit";
     }
 
-    @RequestMapping(value="/enregistrerProduit", method=RequestMethod.POST)
-    public String enregistrerProduit(
-            @Valid Produit pd,
-            BindingResult bindBindingResult,
-            @RequestParam(name="picture") MultipartFile file)
-            throws Exception {
-        if(bindBindingResult.hasErrors()) {
+    @PostMapping("/enregistrerProduit")
+    public String enregistrerProduit(@Valid Produit produit,
+                                     BindingResult result,
+                                     @RequestParam("picture") MultipartFile file) throws IOException {
+        if (result.hasErrors() || file.isEmpty()) {
             return "formProduit";
         }
-        if(!file.isEmpty()) {
-            pd.setPhoto(file.getOriginalFilename());
-            file.transferTo(new File(System.getProperty("user.home")
-                    + "/stock/" + file.getOriginalFilename()));
-        }
-        produitRepository.save(pd);
+
+        String filename = file.getOriginalFilename();
+        produit.setPhoto(filename);
+        file.transferTo(new File(System.getProperty("user.home") + "/stock/" + filename));
+        produitRepository.save(produit);
+
         return "redirect:index";
+    }
+
+    public boolean imageExists(String filename) {
+        return new File(System.getProperty("user.home") + "/stock/" + filename).exists();
     }
 
 }
