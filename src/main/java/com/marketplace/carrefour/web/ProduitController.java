@@ -2,15 +2,19 @@ package com.marketplace.carrefour.web;
 
 import com.marketplace.carrefour.dao.ProduitRepository;
 import com.marketplace.carrefour.entities.Produit;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -44,7 +48,19 @@ public class ProduitController {
     }
 
     @RequestMapping(value="/enregistrerProduit", method=RequestMethod.POST)
-    public String enregistrerProduit(Produit pd) throws Exception {
+    public String enregistrerProduit(
+            @Valid Produit pd,
+            BindingResult bindBindingResult,
+            @RequestParam(name="picture") MultipartFile file)
+            throws Exception {
+        if(bindBindingResult.hasErrors()) {
+            return "formProduit";
+        }
+        if(!file.isEmpty()) {
+            pd.setPhoto(file.getOriginalFilename());
+            file.transferTo(new File(System.getProperty("user.home")
+                    + "/stock/" + file.getOriginalFilename()));
+        }
         produitRepository.save(pd);
         return "redirect:index";
     }

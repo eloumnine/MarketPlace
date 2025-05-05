@@ -1,6 +1,8 @@
 package com.marketplace.carrefour.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,7 +17,9 @@ public class Produit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Nom_Produit", nullable = false, length = 50)
+    @Column(name="NOM", length=30)
+    @NotEmpty
+    @Size(min=5, max=50)
     private String nom;
 
     private double prix;
