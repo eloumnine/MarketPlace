@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Ajouter un produit</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/myStyle.css"
+          th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+<div class="container spacer">
+    <div class="panel panel-default">
+        <div class="panel-heading">Ajouter un produit</div>
+        <div class="panel-body">
+            <form th:action="@{enregistrerProduit}" method="post"
+                  th:object="${produit}">
+                <div class="form-group">
+                    <label class="control-label">Nom:</label>
+                    <input type="text" th:field="*{nom}" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Prix:</label>
+                    <input type="text" th:field="${produit.prix}"
+                           class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Photo:</label>
+                    <input type="file" name="picture" class="form-control" />
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary"> Enregister
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
