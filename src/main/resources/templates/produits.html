@@ -8,6 +8,16 @@
           th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
+
+<div class="container">
+    <form th:action="@{index}" method="get">
+        <div class="form-group">
+            <label>Mot clé:</label>
+            <input type="text" name="motCle" th:value="${motCle}"/>
+            <button type="submit">Chercher</button>
+        </div>
+    </form>
+</div>
 <div class="container">
     <h1>Liste des produits</h1>
     <table class="table table-striped">
@@ -30,7 +40,7 @@
 <div class="container">
     <ul class="nav nav-pills">
         <li th:each="p:${pages}" th:class="${p==pageCourante}?active:''">
-            <a th:text="${p}+1" th:href="@{index(page=${p})}"></a>
+            <a th:text="${p}+1" th:href="@{index(page=${p}, motCle=${motCle})}"></a>
         </li>
     </ul>
 </div>
