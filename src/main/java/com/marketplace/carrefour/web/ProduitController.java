@@ -27,14 +27,19 @@ public class ProduitController {
     }*/
 
     @RequestMapping(value="/index")
-    public String Index(Model model, @RequestParam(name="page", defaultValue="0") int p) {
-        Page<Produit> pageProduits = produitRepository.findAll(
-                PageRequest.of(p, 2));
+    public String Index(Model model,
+                        @RequestParam(name="page", defaultValue="0") int p,
+                        @RequestParam(name="motCle", defaultValue="") String mc) {
+        /*Page<Produit> pageProduits = produitRepository.findAll(
+                PageRequest.of(p, 2));*/
+        Page<Produit> pageProduits =produitRepository
+                .chercherProduits(mc, PageRequest.of(p, 2));
         int pagesCount = pageProduits.getTotalPages();
         int [] pages = new int[pagesCount];
         for(int i=0;i<pagesCount;i++) { pages[i] = i; }
         model.addAttribute("pages", pages);
         model.addAttribute("pageCourante", p);
+        model.addAttribute("motCle", mc);
         model.addAttribute("pageProduits", pageProduits);
         return "produits";
     }
